@@ -1,8 +1,9 @@
 (function($, R) {
     $(function() {
-        var paper = R($('#container')[0], 400, 300);
+        var div = $('<div/>').appendTo('body'),
+            paper = R(div[0], 400, 300);
         
-        function makeShapes(n) {
+        function makeRandomShapes(n) {
             paper.setStart();
             for (var i = 0; i < n; i++) {
                 paper.rect(Math.random() * paper.width, Math.random() * paper.height, Math.random() * paper.width, Math.random() * paper.height).attr({fill:randomColor()});
@@ -20,12 +21,19 @@
             return s;
         };
         
-        var set = makeShapes(10);
+        function setUp() {
+            paper.clear();
+        }
         
-        console.debug(set.slice(5));
         
-        var set2 = paper.set();
+        describe("indexOf", function() {
+            beforeEach(setUp);
+            
+            it("maps correctly", function() {
+                var set = [];
+                // finish test
+            });
+        });
         
-        console.debug(set.slice(1));
     });
 })(jQuery, Raphael);
