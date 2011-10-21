@@ -72,8 +72,8 @@ Adds some handy methods to the Raphaël set:
     for (i = 0; i < 100; i++) {
         if (Math.random() > 0.5) {
             paper.rect(
-                Math.random() * paper.width, Math.random() * paper.height
                 Math.random() * paper.width, Math.random() * paper.height,
+                Math.random() * paper.width, Math.random() * paper.height
             );
         } else {
             paper.cirle(
