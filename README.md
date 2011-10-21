@@ -31,6 +31,23 @@ Adds some handy methods to the Raphaël set:
   
     Proxy method for [`Array.indexOf()`](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/indexOf).
     
+    Returns the index number of the Raphaël object in the set or `-1` if the
+    element isn't within the set.
+    
   * `slice(from[, to])`:
   
     Proxy method for [`Array.slice()`](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/slice).
+    
+    Returns a copy of the original set, does not modify the existing set.
+    
+    Example:
+    
+        var set, i, last10circles;
+        
+        paper.setStart();
+        for (i = 0; i < 100; i++) {
+            paper.circle(Math.random() * paper.width, Math.random() * paper.height, 10);
+        }
+        set = paper.setFinish();
+        
+        last10circles = set.slice(-10); // a new set of the last 10 circles added
