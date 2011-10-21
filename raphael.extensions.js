@@ -57,4 +57,16 @@
         return set;
     };
     
+    /**
+     * Filters the set according to the filtering function
+     * and returns a new set containing the items that
+     * passed the filter.
+     */
+    R.st.filter = function() {
+        if (this.length == 0) return this;
+        var set = this[0].paper.set();
+        set.push.apply(set, Array.prototype.filter.apply(this, arguments));
+        return set;
+    };
+    
 })(Raphael);

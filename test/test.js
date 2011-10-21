@@ -134,6 +134,35 @@
             
         });
         
+        describe('filter', function() {
+            
+            beforeEach(cleanup);
+            
+            it('works on empty sets', function() {
+                var set = paper.set();
+                
+                expect(set.filter(function(item) {}).length).toEqual(0);
+            });
+            
+            it('works on a given set', function() {
+                var set, filtered;
+                
+                paper.setStart();
+                paper.rect(0, 0, 10, 10);
+                paper.circle(100, 100, 10);
+                set = paper.setFinish();
+                
+                filtered = set.filter(function(item) {
+                    return item.type == 'rect';
+                });
+                
+                expect(filtered).toContain(set[0]);
+                expect(filtered).toNotContain(set[1]);
+                
+            });
+            
+        });
+        
         
         // run the runner
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
