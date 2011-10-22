@@ -31,14 +31,14 @@ Adds some handy methods to the Raphaël set:
       
   * `indexOf(item)`:
   
-    Proxy method for [`Array.indexOf()`](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/indexOf).
+    Works like [`Array.indexOf()`](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/indexOf).
     
     Returns the index number of the Raphaël object in the set or `-1` if the
     element isn't within the set.
     
   * `slice(from[, to])`:
   
-    Proxy method for [`Array.slice()`](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/slice).
+    Works like [`Array.slice()`](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/slice).
     
     Returns a copy of the original set, does not modify the existing set.
     
@@ -58,7 +58,7 @@ Adds some handy methods to the Raphaël set:
     
   * `filter(callback[, thisObject])`:
     
-    Proxy method for [`Array.filter()`](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/filter)
+    Works like [`Array.filter()`](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/filter)
     
     Returns a filtered copy of the original set according to the filtering
     function.

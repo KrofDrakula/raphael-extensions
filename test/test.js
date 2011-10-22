@@ -7,20 +7,14 @@
         function makeRandomShapes(n) {
             paper.setStart();
             for (var i = 0; i < n; i++) {
-                paper.rect(Math.random() * paper.width, Math.random() * paper.height, Math.random() * paper.width, Math.random() * paper.height).attr({fill:randomColor()});
+                paper.rect(
+                    Math.random() * paper.width, Math.random() * paper.height,
+                    Math.random() * paper.width, Math.random() * paper.height
+                );
             }
             return paper.setFinish();
         }
-        
-        function randomColor() {
-            var s = '#', i, a;
-            for (i = 0; i < 3; i++) {
-                a = Math.floor(Math.random() * 256).toString(16);
-                s += (a.length == 1) ? '0' + a : a;
-            }
-            return s;
-        };
-        
+                
         function cleanup() {
             paper.clear();
         }
@@ -62,13 +56,11 @@
             
             it('works on empty sets', function() {
                 var set = paper.set();
-                
                 expect(set.slice().length).toEqual(0);
             });
             
             it('works on indexes out of range', function() {
                 var set = makeRandomShapes(10);
-                
                 expect(set.slice(10, 12).length).toEqual(0);
             });
             
@@ -101,7 +93,6 @@
             
             it('works on empty sets', function() {
                 var set = paper.set();
-                
                 expect(set.closestTo(0, 0)).toBe(null);
             });
             
@@ -140,7 +131,6 @@
             
             it('works on empty sets', function() {
                 var set = paper.set();
-                
                 expect(set.filter(function(item) {}).length).toEqual(0);
             });
             
@@ -159,6 +149,76 @@
                 expect(filtered).toContain(set[0]);
                 expect(filtered).toNotContain(set[1]);
                 
+            });
+            
+            it('works with `this` as well', function() {
+                var set, filtered;
+                
+                paper.setStart();
+                paper.rect(0, 0, 10, 10);
+                paper.circle(100, 100, 10);
+                set = paper.setFinish();
+                
+                filtered = set.filter(function() {
+                    return this.type == 'rect';
+                });
+                
+                expect(filtered).toContain(set[0]);
+                expect(filtered).toNotContain(set[1]);
+            });
+            
+            it('works with passing object context', function() {
+                var set, filtered, myObj = { isItMe: 'yes!' };
+                
+                paper.setStart();
+                paper.rect(0, 0, 10, 10);
+                paper.circle(100, 100, 10);
+                set = paper.setFinish();
+                
+                filtered = set.filter(function() {
+                    expect(this).toBe(myObj);
+                    return true;
+                }, myObj);
+                
+                expect(filtered.length).toEqual(2);
+            });
+            
+        });
+        
+        describe('map', function() {
+        
+            beforeEach(cleanup);
+            
+            it('works on empty sets', function() {
+                var set = paper.set();
+                
+                expect(set.map(function(item) { return item; }).length).toEqual(0);
+            });
+            
+            it('correctly extracts properties', function() {
+                var set = paper.set();
+                set.push(paper.rect(0,0,10,10).attr({fill:'#ff0000'}));
+                
+                expect(set.map(function(item) { return item.attr('fill'); })).toEqual(['#ff0000']);
+            });
+            
+            it('correctly works with `this` as well', function() {
+                var set = paper.set();
+                set.push(paper.rect(0,0,10,10).attr({fill:'#ff0000'}));
+                
+                expect(set.map(function() { return this.attr('fill'); })).toEqual(['#ff0000']);
+            });
+            
+            it('works with passing context', function() {
+                var set = paper.set(), filtered, myObj = { isItMe: 'yes!' };
+                set.push(paper.rect(0,0,10,10).attr({fill:'#ff0000'}));
+                
+                filtered = set.map(function(item) {
+                    expect(this).toBe(myObj);
+                    return item.attr('fill');
+                }, myObj);
+                
+                expect(filtered).toEqual(['#ff0000']);
             });
             
         });

@@ -62,10 +62,27 @@
      * and returns a new set containing the items that
      * passed the filter.
      */
-    R.st.filter = function() {
+    R.st.filter = function(callback, thisObj) {
         if (this.length == 0) return this;
         var set = this[0].paper.set();
-        set.push.apply(set, Array.prototype.filter.apply(this, arguments));
+        thisObj = thisObj || null;
+        this.forEach(function(item) {
+            if (callback.call((thisObj == null)? item : thisObj, item))
+                set.push(item);
+        });
+        return set;
+    };
+    
+    /**
+     * Maps the set to a new array of values, as converted
+     * by the callback.
+     */
+    R.st.map = function(callback, thisObj) {
+        var set = [];
+        thisObj = thisObj || null;
+        this.forEach(function(item) {
+            set.push(callback.call((thisObj == null)? item : thisObj, item));
+        });
         return set;
     };
     
