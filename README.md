@@ -66,7 +66,7 @@ Adds some handy methods to the Raphaël set:
     Example:
     
     ```js
-    var set, circles;
+    var set, i, circles;
     
     paper.setStart();
     for (i = 0; i < 100; i++) {
@@ -85,7 +85,36 @@ Adds some handy methods to the Raphaël set:
     set = paper.setFinish();
     
     // filter
-    circles = set.filter(function(el) {
-        return el.type == 'circle';
+    circles = set.filter(function() {
+        return this.type == 'circle';
+    });
+    ```
+  * `map(callback[, thisObject])`:
+    
+    Works like [`Array.map()`](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map).
+
+    Returns an array of objects constructed by the callback from the
+    elements of the set. Useful for extracting parts of Raphaël objects.
+    
+    Example:
+    
+    ```js
+    var set, i, colors = ['red', 'green', 'blue'], extracted;
+    
+    paper.setStart();
+    for (i = 0; i < 100; i++) {
+            paper.circle(
+                Math.random() * paper.width, Math.random() * paper.height,
+                10
+            ).attr({
+                fill: colors[Math.floor(Math.random() * colors.length]
+            });
+        }
+    }
+    set = paper.setFinish();
+    
+    // extract all the fill colors from the set
+    extracted = set.map(function() {
+        return this.attr('fill');
     });
     ```
